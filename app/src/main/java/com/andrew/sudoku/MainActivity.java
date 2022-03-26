@@ -17,7 +17,10 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayout parentLayout = (LinearLayout)findViewById(R.id.parent);
 
-        parentLayout.addView(new Board(MainActivity.this));
+        board =new Board(MainActivity.this);
+
+        parentLayout.addView(board);
+        parentLayout.setOnClickListener(board);
 
         for (int x = 0; x < 9; x ++){
             TextView textView = new TextView(MainActivity.this);

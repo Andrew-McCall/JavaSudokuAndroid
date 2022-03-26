@@ -5,9 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
-public class Board extends View {
+public class Board extends View implements  View.OnTouchListener,View.OnClickListener{
 
     public Board(Context context) {
         super(context);
@@ -53,4 +55,15 @@ public class Board extends View {
         }
     }
 
+
+    @Override
+    public void onClick(View view) {
+        Log.d("myTag", "This is my message");
+
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return false;
+    }
 }
