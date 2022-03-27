@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Board extends View implements  View.OnTouchListener,View.OnClickListener{
+public class Board extends View implements View.OnClickListener{
 
     public Board(Context context) {
         super(context);
@@ -62,8 +62,4 @@ public class Board extends View implements  View.OnTouchListener,View.OnClickLis
 
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
-    }
 }
