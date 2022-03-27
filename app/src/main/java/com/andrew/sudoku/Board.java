@@ -11,8 +11,11 @@ import android.view.View;
 
 public class Board extends View implements View.OnTouchListener{
 
-    public Board(Context context) {
+    Logic dataLogic;
+
+    public Board(Context context, Logic logic) {
         super(context);
+        dataLogic = logic;
     }
 
     private int BoxDimensions;
@@ -24,6 +27,9 @@ public class Board extends View implements View.OnTouchListener{
 
         Paint paint = new Paint();
 
+        paint.setAntiAlias(true);
+        paint.setTextSize(BoxDimensions*0.8f);
+
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 if ((x + y) % 2 == 0 ){
@@ -33,6 +39,11 @@ public class Board extends View implements View.OnTouchListener{
                 }
                 Rect rect = new Rect(x*BoxDimensions, y*BoxDimensions, x*BoxDimensions + BoxDimensions, y*BoxDimensions + BoxDimensions);
                 canvas.drawRect(rect, paint);
+
+                int no = dataLogic.getValue(x, y);
+
+                paint.setColor( Color.rgb(255, 255, 255) );
+                canvas.drawText(String.valueOf(no),(float) ((x*BoxDimensions)+BoxDimensions/4), (float) ((y*BoxDimensions)+BoxDimensions/1.25), paint);
             }
         }
 
@@ -63,7 +74,7 @@ public class Board extends View implements View.OnTouchListener{
             int squareY = (int) (motionEvent.getY()/BoxDimensions);
 
             Log.d("Touch coordinates",String.valueOf(squareX) + ", " + String.valueOf(squareY));
-            
+
         }
         return true;
     }
