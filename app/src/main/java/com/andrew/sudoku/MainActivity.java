@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         board =new Board(MainActivity.this);
 
         parentLayout.addView(board);
-        parentLayout.setOnClickListener(board);
+        parentLayout.setOnTouchListener(board);
 
         for (int x = 0; x < 9; x ++){
             TextView textView = new TextView(MainActivity.this);

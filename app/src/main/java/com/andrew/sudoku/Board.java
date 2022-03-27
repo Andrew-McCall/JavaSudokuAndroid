@@ -9,18 +9,18 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Board extends View implements View.OnClickListener{
+public class Board extends View implements View.OnTouchListener{
 
     public Board(Context context) {
         super(context);
     }
 
-
+    private int BoxDimensions;
 
     @Override
     public void onDraw(Canvas canvas) {
 
-        int BoxDimensions = canvas.getWidth()/9;
+        BoxDimensions = canvas.getWidth()/9;
 
         Paint paint = new Paint();
 
@@ -55,11 +55,16 @@ public class Board extends View implements View.OnClickListener{
         }
     }
 
-
     @Override
-    public void onClick(View view) {
-        Log.d("myTag", "This is my message");
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
 
+            int squareX = (int) (motionEvent.getX()/BoxDimensions);
+            int squareY = (int) (motionEvent.getY()/BoxDimensions);
+
+            Log.d("Touch coordinates",String.valueOf(squareX) + ", " + String.valueOf(squareY));
+            
+        }
+        return true;
     }
-
 }
