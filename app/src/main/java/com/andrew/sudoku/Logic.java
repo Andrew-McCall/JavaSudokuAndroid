@@ -80,7 +80,6 @@ public class Logic {
         }
 
         if (isError) {
-
             setError(x, y, true);
         }
 

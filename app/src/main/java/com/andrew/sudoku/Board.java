@@ -13,7 +13,7 @@ public class Board extends View implements View.OnTouchListener{
 
     private Logic dataLogic;
     private int selectedNo = 5;
-    private boolean pencil = true;
+    private boolean pencil = false;
 
     public Board(Context context, Logic logic) {
         super(context);
@@ -21,6 +21,7 @@ public class Board extends View implements View.OnTouchListener{
     }
 
     private int BoxDimensions;
+    private int PanelButton;
 
     @Override
     public void onDraw(Canvas canvas) {
@@ -51,15 +52,15 @@ public class Board extends View implements View.OnTouchListener{
 
                 switch (meta){
                     case 0:	// Pencil
-                        paint.setColor( Color.rgb(180, 30, 100) );
+                        paint.setColor( Color.rgb(170, 150, 160) );
                         break;
 
                     case 1: // Regular
-                        paint.setColor( Color.rgb(120, 15, 80) );
+                        paint.setColor( Color.rgb(100, 30, 80) );
                         break;
 
                     case 3: // Permanent
-                        paint.setColor( Color.rgb(9, 10, 60) );
+                        paint.setColor( Color.rgb(90, 10, 60) );
                         break;
 
                     case 5: // Green For Fin.
@@ -93,9 +94,88 @@ public class Board extends View implements View.OnTouchListener{
             canvas.drawRect(rect, paint);
         }
 
-        // Control Panel
-        
 
+
+        // Control Panel //
+
+        PanelButton = (int) (BoxDimensions*1.5f);
+
+        for (int x = 0; x < 9; x++){
+            int left = (int) (PanelButton/3 + (PanelButton)*(x%3));
+            int top = (int) (PanelButton*6.7 +(PanelButton)*(x/3));
+            Rect rect = new Rect(left,
+                    top,
+                    left+PanelButton-BoxDimensions/10,
+                    top+PanelButton-BoxDimensions/10
+            );
+
+            paint.setColor( Color.rgb(220, 175, 200) );
+            canvas.drawRect(rect, paint);
+
+            if (x+1 != selectedNo){
+                rect = new Rect(left,
+                        top,
+                        left+PanelButton-BoxDimensions/6,
+                        top+PanelButton-BoxDimensions/6
+                );
+
+                paint.setColor( Color.rgb(255, 200, 235) );
+                canvas.drawRect(rect, paint);
+            }
+
+
+
+            paint.setColor( Color.rgb(90, 10, 60) );
+            paint.setTextSize(PanelButton);
+            canvas.drawText(String.valueOf(x+1),(float) left+PanelButton/5, (float) ((float) top+PanelButton/1.25), paint);
+        }
+
+        // Erase Button
+        Rect rect = new Rect(9*BoxDimensions-PanelButton/3-PanelButton*2,
+                (int) (11.5*BoxDimensions),
+                9*BoxDimensions-PanelButton/3,
+                (int) (12.5*BoxDimensions)
+        );
+        paint.setColor( Color.rgb(220, 175, 200) );
+        canvas.drawRect(rect, paint);
+
+        if (selectedNo != 0){
+            rect = new Rect(9*BoxDimensions-PanelButton/3-PanelButton*2,
+                    (int) (11.5*BoxDimensions),
+                    9*BoxDimensions-PanelButton/3-BoxDimensions/8,
+                    (int) (12.5*BoxDimensions-BoxDimensions/8)
+            );
+            paint.setColor( Color.rgb(255, 200, 235) );
+            canvas.drawRect(rect, paint);
+        }
+
+        paint.setColor( Color.rgb(90, 10, 60) );
+        paint.setTextSize(BoxDimensions*0.8f);
+        canvas.drawText("Eraser", 9.4f*BoxDimensions-PanelButton/3-PanelButton*2, 12.2f*BoxDimensions, paint);
+
+        // Pencil/Pen Button
+        rect = new Rect(9*BoxDimensions-PanelButton/3-PanelButton*2,
+                13*BoxDimensions,
+                9*BoxDimensions-PanelButton/3,
+                14*BoxDimensions
+        );
+        paint.setColor( Color.rgb(220, 175, 200) );
+        canvas.drawRect(rect, paint);
+
+        if (!pencil){
+            rect = new Rect(9*BoxDimensions-PanelButton/3-PanelButton*2,
+                    13*BoxDimensions,
+                    9*BoxDimensions-PanelButton/3-BoxDimensions/8,
+                    14*BoxDimensions-BoxDimensions/8
+            );
+            paint.setColor( Color.rgb(255, 200, 235) );
+            canvas.drawRect(rect, paint);
+        }
+
+        paint.setColor( Color.rgb(90, 10, 60) );
+        paint.setTextSize(BoxDimensions*0.8f);
+        canvas.drawText((pencil) ? "Pen":"Pencil", 9.5f*BoxDimensions-PanelButton/3-PanelButton*2 + ((pencil) ?PanelButton/4 : 0), 13.75f*BoxDimensions, paint);
+        // Timer
     }
 
     @Override
@@ -106,8 +186,8 @@ public class Board extends View implements View.OnTouchListener{
             int squareY = (int) (motionEvent.getY()/BoxDimensions);
 
             if (squareX < 9 && squareX >= 0 && squareY < 9 && squareY >= 0){
-                dataLogic.writeNumber(squareX,squareY, selectedNo, pencil);
-            }else {
+                dataLogic.writeNumber(squareX, squareY, selectedNo, pencil);
+            } else {
 
             }
             super.invalidate();

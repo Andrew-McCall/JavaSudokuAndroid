@@ -30,7 +30,5 @@ public class MainActivity extends AppCompatActivity {
             parentLayout.addView(textView);
         }
 
-
-
     }
 }
