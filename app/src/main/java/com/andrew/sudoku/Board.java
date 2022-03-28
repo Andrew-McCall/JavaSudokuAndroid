@@ -41,9 +41,33 @@ public class Board extends View implements View.OnTouchListener{
                 canvas.drawRect(rect, paint);
 
                 int no = dataLogic.getValue(x, y);
+                int meta = dataLogic.getMeta(x, y);
 
-                paint.setColor( Color.rgb(255, 255, 255) );
+                if (no == 0) continue;
+
+                switch (meta){
+                    case 0:	// Pencil
+                        paint.setColor( Color.rgb(180, 30, 100) );
+                        break;
+
+                    case 1: // Regular
+                        paint.setColor( Color.rgb(120, 15, 80) );
+                        break;
+
+                    case 3: // Permanent
+                        paint.setColor( Color.rgb(9, 10, 60) );
+                        break;
+
+                    case 5: // Green For Fin.
+                        paint.setColor( Color.rgb(45, 120, 45) );
+                        break;
+
+                    default: // Error (4 & 2)
+                        paint.setColor( Color.rgb(255, 45, 45) );
+                }
+
                 canvas.drawText(String.valueOf(no),(float) ((x*BoxDimensions)+BoxDimensions/4), (float) ((y*BoxDimensions)+BoxDimensions/1.25), paint);
+
             }
         }
 
