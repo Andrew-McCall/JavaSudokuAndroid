@@ -11,7 +11,9 @@ import android.view.View;
 
 public class Board extends View implements View.OnTouchListener{
 
-    Logic dataLogic;
+    private Logic dataLogic;
+    private int selectedNo = 5;
+    private boolean pencil = true;
 
     public Board(Context context, Logic logic) {
         super(context);
@@ -32,6 +34,7 @@ public class Board extends View implements View.OnTouchListener{
 
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
+                // Checker //
                 if ((x + y) % 2 == 0 ){
                     paint.setColor( Color.rgb(220, 175, 200) );
                 }else{
@@ -40,8 +43,9 @@ public class Board extends View implements View.OnTouchListener{
                 Rect rect = new Rect(x*BoxDimensions, y*BoxDimensions, x*BoxDimensions + BoxDimensions, y*BoxDimensions + BoxDimensions);
                 canvas.drawRect(rect, paint);
 
-                int no = dataLogic.getValue(x, y);
-                int meta = dataLogic.getMeta(x, y);
+                // Text //
+                final int no = dataLogic.getValue(x, y);
+                final int meta = dataLogic.getMeta(x, y);
 
                 if (no == 0) continue;
 
@@ -88,6 +92,10 @@ public class Board extends View implements View.OnTouchListener{
             );
             canvas.drawRect(rect, paint);
         }
+
+        // Control Panel
+        
+
     }
 
     @Override
@@ -97,9 +105,14 @@ public class Board extends View implements View.OnTouchListener{
             int squareX = (int) (motionEvent.getX()/BoxDimensions);
             int squareY = (int) (motionEvent.getY()/BoxDimensions);
 
-            Log.d("Touch coordinates",String.valueOf(squareX) + ", " + String.valueOf(squareY));
+            if (squareX < 9 && squareX >= 0 && squareY < 9 && squareY >= 0){
+                dataLogic.writeNumber(squareX,squareY, selectedNo, pencil);
+            }else {
 
+            }
+            super.invalidate();
+            return true;
         }
-        return true;
+        return false;
     }
 }
