@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         dataLogic = new Logic();
         LinearLayout parentLayout = (LinearLayout)findViewById(R.id.parent);
 
-        board =new Board(MainActivity.this, dataLogic);
+        board = new Board(MainActivity.this, dataLogic);
 
         parentLayout.addView(board);
         parentLayout.setOnTouchListener(board);

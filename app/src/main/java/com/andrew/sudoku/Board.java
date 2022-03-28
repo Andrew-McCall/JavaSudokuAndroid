@@ -7,9 +7,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,6 +34,7 @@ public class Board extends View implements View.OnTouchListener{
     public Board(Context context, Logic logic) {
         super(context);
         dataLogic = logic;
+        readGame();
         Timer timer = new Timer(true);
         timer.schedule(new TimerTask() {
             @Override
@@ -36,6 +45,7 @@ public class Board extends View implements View.OnTouchListener{
                 }
             }
         }, 1000, 1000);
+
     }
 
     @Override
@@ -198,7 +208,7 @@ public class Board extends View implements View.OnTouchListener{
                 9 * BoxDimensions - PanelButton / 3,
                 11 * BoxDimensions
         );
-        paint.setColor(Color.rgb(255, 200, 235));
+        paint.setColor(Color.rgb(220, 175, 200));
         canvas.drawRect(rect, paint);
 
         paint.setColor(Color.rgb(90, 10, 60));
@@ -206,9 +216,40 @@ public class Board extends View implements View.OnTouchListener{
         canvas.drawText(clock, 6.25f * BoxDimensions - ((time/60>9)?BoxDimensions/3.05f:0), 10.75f * BoxDimensions, paint);
     }
 
+    public void readGame(){
+        int[] output = new int[81];
+
+        String string;
+        try {
+            String game = "";
+
+            InputStream inputStream = getContext().getAssets().open("games.csv");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            reader.skip((long) (inputStream.available() * Math.random()));
+            reader.readLine();
+
+            game = reader.readLine();
+            reader.close();
+
+            for (int i = 0; i < game.length(); i++) {
+                output[i] =  Character.getNumericValue(game.charAt(i))  ;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        dataLogic.loadGame(output);
+    }
+
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+
+            if (dataLogic.getValue(0,0) == 5){
+                time = 0;
+                readGame();
+            }
 
             int squareX = (int) (motionEvent.getX()/BoxDimensions);
             int squareY = (int) (motionEvent.getY()/BoxDimensions);
