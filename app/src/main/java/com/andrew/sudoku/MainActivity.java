@@ -10,6 +10,19 @@ public class MainActivity extends AppCompatActivity {
 
     private Board board;
     private Logic dataLogic;
+    protected static boolean isVisible = true;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isVisible = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isVisible = false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,4 +44,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 }

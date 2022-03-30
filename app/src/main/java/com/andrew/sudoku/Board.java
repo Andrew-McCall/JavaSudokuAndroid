@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,13 +38,12 @@ public class Board extends View implements View.OnTouchListener{
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (dataLogic.getValue(0,0) != 5){
+                if (dataLogic.getValue(0,0) != 5 && MainActivity.isVisible){
                     time+=1;
                     Board.super.invalidate();
                 }
             }
         }, 1000, 1000);
-
     }
 
     @Override
