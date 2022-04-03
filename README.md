@@ -5,6 +5,6 @@ The Logic Class is a direct copy but the board is rewritten as a View and Canvas
 
 ## Known Bugs
 - ~~Timer permantly counts out~~
-- Game (rarely) resets randomly, I think Android doesnt play nicely with the whole app being loaded on the OnCreate of the Board.
+- ~~Game (rarely) resets randomly ~~ 
 - Menu wasn't ported over.
 - Some Screen ratios crop the game. (Made for Pixel 3a XL, 1440x2560)
