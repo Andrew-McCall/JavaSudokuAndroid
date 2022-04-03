@@ -244,7 +244,7 @@ public class Board extends View implements View.OnTouchListener{
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
 
-            if (dataLogic.getValue(0,0) == 5){
+            if (dataLogic.getMeta(0,0) == 5){
                 time = 0;
                 readGame();
             }
