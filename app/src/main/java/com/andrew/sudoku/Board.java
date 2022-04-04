@@ -214,7 +214,6 @@ public class Board extends View implements View.OnTouchListener{
         paint.setColor(Color.rgb(90, 10, 60));
         String clock = String.format("%d : %d", time/60, time%60);
         canvas.drawText(clock, 6.25f * BoxDimensions - ((time/60>9)?BoxDimensions/3.05f:0), 10.75f * BoxDimensions, paint);
-        
     }
 
     public void readGame(){
@@ -295,13 +294,14 @@ public class Board extends View implements View.OnTouchListener{
                     meta[i] = Character.getNumericValue(ret[1].charAt(i))  ;
                 }
 
+                dataLogic.loadSave(data, meta);
+
             }
         }
         catch (Exception e) {
-            Log.e("login activity", e.toString());
+            readGame();
         }
 
-        dataLogic.loadSave(data, meta);
 
     }
 
