@@ -13,9 +13,11 @@ import android.view.View;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -238,6 +240,72 @@ public class Board extends View implements View.OnTouchListener{
         }
 
         dataLogic.loadGame(output);
+    }
+
+    public void writeSave(){
+
+        String save = "";
+
+        for (int i = 0; i < 9; i++) {
+            for (int z = 0; z < 9; z++) {
+                save += String.valueOf(dataLogic.getValue(i,z));
+            }
+        }
+
+        save+=" ";
+
+        for (int i = 0; i < 9; i++) {
+            for (int z = 0; z < 9; z++) {
+                save += String.valueOf(dataLogic.getMeta(i,z));
+            }
+        }
+
+        try {
+
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("save.csv", Context.MODE_PRIVATE));
+            outputStreamWriter.write(save);
+            outputStreamWriter.close();
+
+        }
+        catch (IOException e) {
+
+            Log.e("Exception", "File write failed: " + e.toString());
+
+        }
+
+    }
+
+    public void loadSave(){
+
+        int[] data = new int[81];
+        int[] meta = new int[81];
+
+        try {
+            InputStream inputStream = getContext().openFileInput("save.csv");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                final String[] ret = bufferedReader.readLine().split(" ");
+
+                inputStream.close();
+
+                for (int i = 0; i < 81; i++) {
+                    data[i] = Character.getNumericValue(ret[0].charAt(i))  ;
+                    meta[i] = Character.getNumericValue(ret[1].charAt(i))  ;
+                }
+
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        dataLogic.loadSave(data, meta);
+
     }
 
     @Override

@@ -18,13 +18,22 @@ public class Logic {
 
     }
 
+    public void loadSave(int[] value, int[] meta){
+        for (int i = 0; i < 9; i++) {
+            for (int z = 0; z < 9; z++) {
+                numbersMeta[i][z] = meta[(i*9)+z];
+                numbersValue[i][z] = value[(i*9)+z];
+            }
+        }
+    }
+
     public void writeNumber(int x, int y, int value, boolean pencil) {
 
         if (numbersMeta[x][y] < 3) {
             numbersMeta[x][y] = pencil ? 0 : 1;
             numbersValue[x][y] = value;
 
-            checkLegal(x,y);
+            checkLegal(x, y);
 
         }
     }
@@ -51,7 +60,7 @@ public class Logic {
             checkBox(x,y);
         }
 
-        if (correct == true) {
+        if (correct) {
             Arrays.stream(numbersMeta).forEach(a -> Arrays.fill(a, 5));
         }
 

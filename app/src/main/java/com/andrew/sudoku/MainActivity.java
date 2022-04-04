@@ -1,7 +1,6 @@
 package com.andrew.sudoku;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dataLogic = new Logic();
-        LinearLayout parentLayout = (LinearLayout)findViewById(R.id.parent);
+        LinearLayout parentLayout = findViewById(R.id.parent);
 
         board = new Board(MainActivity.this, dataLogic);
 
