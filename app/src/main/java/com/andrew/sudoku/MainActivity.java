@@ -15,10 +15,12 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         isVisible = true;
+        board.loadSave();
     }
 
     @Override
     public void onPause() {
+        board.writeSave();
         super.onPause();
         isVisible = false;
     }

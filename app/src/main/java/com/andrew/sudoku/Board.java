@@ -214,6 +214,7 @@ public class Board extends View implements View.OnTouchListener{
         paint.setColor(Color.rgb(90, 10, 60));
         String clock = String.format("%d : %d", time/60, time%60);
         canvas.drawText(clock, 6.25f * BoxDimensions - ((time/60>9)?BoxDimensions/3.05f:0), 10.75f * BoxDimensions, paint);
+        
     }
 
     public void readGame(){
@@ -267,10 +268,8 @@ public class Board extends View implements View.OnTouchListener{
             outputStreamWriter.close();
 
         }
-        catch (IOException e) {
-
-            Log.e("Exception", "File write failed: " + e.toString());
-
+        catch (Exception e) {
+            Log.e("login activity", e.toString());
         }
 
     }
@@ -298,10 +297,8 @@ public class Board extends View implements View.OnTouchListener{
 
             }
         }
-        catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
+        catch (Exception e) {
+            Log.e("login activity", e.toString());
         }
 
         dataLogic.loadSave(data, meta);
