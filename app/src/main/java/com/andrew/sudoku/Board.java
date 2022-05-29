@@ -124,7 +124,6 @@ public class Board extends View implements View.OnTouchListener{
 
 
         // Control Panel //
-
         PanelButton = (int) (BoxDimensions * 1.5f);
 
         for (int x = 0; x < 9; x++) {
@@ -158,18 +157,18 @@ public class Board extends View implements View.OnTouchListener{
 
         // Erase Button
         Rect rect = new Rect(9 * BoxDimensions - PanelButton / 3 - PanelButton * 2,
-                (int) (11.5 * BoxDimensions),
+                (int) (11 * BoxDimensions),
                 9 * BoxDimensions - PanelButton / 3,
-                (int) (12.5 * BoxDimensions)
+                (int) (12 * BoxDimensions)
         );
         paint.setColor(Color.rgb(220, 175, 200));
         canvas.drawRect(rect, paint);
 
         if (selectedNo != 0) {
             rect = new Rect(9 * BoxDimensions - PanelButton / 3 - PanelButton * 2,
-                    (int) (11.5 * BoxDimensions),
+                    (int) (11 * BoxDimensions),
                     9 * BoxDimensions - PanelButton / 3 - BoxDimensions / 8,
-                    (int) (12.5 * BoxDimensions - BoxDimensions / 8)
+                    (int) (12 * BoxDimensions) // BD/8
             );
             paint.setColor(Color.rgb(255, 200, 235));
             canvas.drawRect(rect, paint);
@@ -177,22 +176,22 @@ public class Board extends View implements View.OnTouchListener{
 
         paint.setColor(Color.rgb(90, 10, 60));
         paint.setTextSize(BoxDimensions * 0.8f);
-        canvas.drawText("Eraser", 9.4f * BoxDimensions - PanelButton / 3 - PanelButton * 2, 12.2f * BoxDimensions, paint);
+        canvas.drawText("Eraser", 9.4f * BoxDimensions - PanelButton / 3 - PanelButton * 2, 11.75f * BoxDimensions, paint);
 
         // Pencil/Pen Button
         rect = new Rect(9 * BoxDimensions - PanelButton / 3 - PanelButton * 2,
-                13 * BoxDimensions,
+                (int) (12.5 * BoxDimensions),
                 9 * BoxDimensions - PanelButton / 3,
-                14 * BoxDimensions
+                (int) (13.5 * BoxDimensions - BoxDimensions / 8)
         );
         paint.setColor(Color.rgb(220, 175, 200));
         canvas.drawRect(rect, paint);
 
         if (pencil) {
             rect = new Rect(9 * BoxDimensions - PanelButton / 3 - PanelButton * 2,
-                    13 * BoxDimensions,
+                    (int) (12.5f * BoxDimensions),
                     9 * BoxDimensions - PanelButton / 3 - BoxDimensions / 8,
-                    14 * BoxDimensions - BoxDimensions / 8
+                    (int) (13.5f * BoxDimensions - BoxDimensions / 8)
             );
             paint.setColor(Color.rgb(255, 200, 235));
             canvas.drawRect(rect, paint);
@@ -200,20 +199,40 @@ public class Board extends View implements View.OnTouchListener{
 
         paint.setColor(Color.rgb(90, 10, 60));
         paint.setTextSize(BoxDimensions * 0.8f);
-        canvas.drawText((pencil) ? "Pencil" : "Pen", 9.5f * BoxDimensions - PanelButton / 3 - PanelButton * 2 + ((pencil) ? 0:PanelButton / 4), 13.75f * BoxDimensions, paint);
+        canvas.drawText((pencil) ? "Pencil" : "Pen", 9.5f * BoxDimensions - PanelButton / 3 - PanelButton * 2 + ((pencil) ? 0:PanelButton / 4), 13.25f * BoxDimensions, paint);
 
         // Timer
         rect = new Rect(9 * BoxDimensions - PanelButton / 3 - PanelButton * 2,
-                10 * BoxDimensions,
+                (int) (9.5f * BoxDimensions),
                 9 * BoxDimensions - PanelButton / 3,
-                11 * BoxDimensions
+                (int) (10.5f * BoxDimensions)
         );
         paint.setColor(Color.rgb(220, 175, 200));
         canvas.drawRect(rect, paint);
 
         paint.setColor(Color.rgb(90, 10, 60));
         String clock = String.format("%d : %d", time/60, time%60);
-        canvas.drawText(clock, 6.25f * BoxDimensions - ((time/60>9)?BoxDimensions/3.05f:0), 10.75f * BoxDimensions, paint);
+        canvas.drawText(clock, 6.25f * BoxDimensions - ((time/60>9)?BoxDimensions/3.05f:0), 10.25f * BoxDimensions, paint);
+
+        // Restart
+        rect = new Rect(9 * BoxDimensions - PanelButton / 3 - PanelButton * 2,
+                (int) (13.85 * BoxDimensions),
+                9 * BoxDimensions - PanelButton / 3,
+                (int) (14.85 * BoxDimensions - BoxDimensions / 8)
+        );
+        paint.setColor(Color.rgb(220, 175, 200));
+        canvas.drawRect(rect, paint);
+
+        rect = new Rect(9 * BoxDimensions - PanelButton / 3 - PanelButton * 2,
+                (int) (13.85 * BoxDimensions),
+                9 * BoxDimensions - PanelButton / 3 - BoxDimensions / 8,
+                (int) (14.85 * BoxDimensions - BoxDimensions / 8)
+        );
+        paint.setColor(Color.rgb(255, 200, 235));
+        canvas.drawRect(rect, paint);
+
+        paint.setColor(Color.rgb(90, 10, 60));
+        canvas.drawText("Skip", 6.25f * BoxDimensions - ((time/60>9)?BoxDimensions/3.05f:0), 14.6f * BoxDimensions, paint);
     }
 
     public void readGame(){
@@ -335,16 +354,27 @@ public class Board extends View implements View.OnTouchListener{
                     // Pencil
                     if (motionEvent.getX() > 9 * BoxDimensions - PanelButton / 3 - PanelButton * 2 &&
                             motionEvent.getX() < 9 * BoxDimensions - PanelButton / 3 - BoxDimensions / 8 &&
-                            motionEvent.getY() > 13 * BoxDimensions &&
-                            motionEvent.getY() < 14 * BoxDimensions - BoxDimensions / 8
+                            motionEvent.getY() > 12.5 * BoxDimensions &&
+                            motionEvent.getY() < 13.5 * BoxDimensions
                     ) {
                         pencil = !pencil;
-                    }else
+                    }
+                    else
+                    // Skip
+                    if (motionEvent.getX() > 9 * BoxDimensions - PanelButton / 3 - PanelButton * 2 &&
+                            motionEvent.getX() < 9 * BoxDimensions - PanelButton / 3 - BoxDimensions / 8 &&
+                            motionEvent.getY() > 14 * BoxDimensions &&
+                            motionEvent.getY() < 15 * BoxDimensions
+                    ){
+                        time = 0;
+                        readGame();
+                    }
+                    else
                     // Eraser
                     if (motionEvent.getX() > 9 * BoxDimensions - PanelButton / 3 - PanelButton * 2 &&
-                            motionEvent.getY() > 11.5 * BoxDimensions &&
                             motionEvent.getX() < 9 * BoxDimensions - PanelButton / 3&&
-                            motionEvent.getY() < 12.5 * BoxDimensions
+                            motionEvent.getY() > 11 * BoxDimensions &&
+                            motionEvent.getY() < 12 * BoxDimensions
                     ){
                         selectedNo = 0;
                     }
