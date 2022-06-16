@@ -233,12 +233,14 @@ public class Board extends View implements View.OnTouchListener{
 
         paint.setColor(Color.rgb(90, 10, 60));
         canvas.drawText("Skip", 6.25f * BoxDimensions - ((time/60>9)?BoxDimensions/3.05f:0), 14.6f * BoxDimensions, paint);
+
     }
 
     public void readGame(){
         int[] output = new int[81];
 
         String string;
+
         try {
             String game = "";
 
@@ -248,6 +250,7 @@ public class Board extends View implements View.OnTouchListener{
             reader.readLine();
 
             game = reader.readLine();
+
             reader.close();
 
             for (int i = 0; i < game.length(); i++) {
@@ -259,6 +262,7 @@ public class Board extends View implements View.OnTouchListener{
         }
 
         dataLogic.loadGame(output);
+
     }
 
     public void writeSave(){
@@ -279,7 +283,8 @@ public class Board extends View implements View.OnTouchListener{
             }
         }
 
-        save += String.valueOf(time);
+        save+=" ";
+        save+=String.valueOf(time);
 
         try {
 
@@ -315,9 +320,8 @@ public class Board extends View implements View.OnTouchListener{
                     meta[i] = Character.getNumericValue(ret[1].charAt(i))  ;
                 }
 
-                time = Integer.valueOf(ret[82]);
-
                 dataLogic.loadSave(data, meta);
+                time = Integer.valueOf(ret[2]);
 
             }
         }
