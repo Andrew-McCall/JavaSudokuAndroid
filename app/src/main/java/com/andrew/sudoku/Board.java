@@ -279,6 +279,8 @@ public class Board extends View implements View.OnTouchListener{
             }
         }
 
+        save += String.valueOf(time);
+
         try {
 
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getContext().openFileOutput("save.csv", Context.MODE_PRIVATE));
@@ -312,6 +314,8 @@ public class Board extends View implements View.OnTouchListener{
                     data[i] = Character.getNumericValue(ret[0].charAt(i))  ;
                     meta[i] = Character.getNumericValue(ret[1].charAt(i))  ;
                 }
+
+                time = Integer.valueOf(ret[82]);
 
                 dataLogic.loadSave(data, meta);
 
